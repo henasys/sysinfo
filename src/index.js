@@ -65,3 +65,7 @@ ipcMain.handle('get-sysinfo', async (event) => {
     resolve(_sysInfo);
   });
 })
+
+ipcMain.on('save-userinfo', (event, info) => {
+  console.log('save-userinfo', info);
+})

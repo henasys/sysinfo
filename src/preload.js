@@ -5,11 +5,15 @@ const { contextBridge, ipcRenderer } = require('electron')
 const Iconv = require('iconv').Iconv
 
 contextBridge.exposeInMainWorld(
-  'api',
+  'mainApi',
   {
     getSysInfo: async () => {
       const result = await ipcRenderer.invoke('get-sysinfo')
       return result
+    },
+    saveUserInfo: (info) => {
+      console.log('saveUserInfo', info);
+      ipcRenderer.send('save-userinfo', info);
     },
     iconv: (source, fromEncoding, toEncoding = 'UTF-8') => {
       const iconv = new Iconv(fromEncoding, toEncoding);
