@@ -5,10 +5,13 @@
 // selectively enable features needed in the rendering
 // process.
 
+const resultTag = document.getElementById('result')
+
 document.getElementById('getSysInfoBtn').addEventListener('click', async () => {
   console.log('getSysInfoBtn clicked');
   const result = await window.api.getSysInfo();
   console.log('result', result);
+  resultTag.innerText = JSON.stringify(result);
 })
 
 // Run this function after the page has loaded
