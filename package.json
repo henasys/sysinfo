@@ -45,6 +45,7 @@
     }
   },
   "dependencies": {
+    "bootstrap": "^4.5.3",
     "electron-squirrel-startup": "^1.0.0",
     "iconv": "^3.0.0",
     "systeminformation": "^4.32.0"
