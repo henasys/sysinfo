@@ -2,21 +2,44 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">    
     <title>Sys Info</title>
+    <link rel="stylesheet" href="../node_modules\bootstrap\dist\css\bootstrap.min.css">
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    <h1>Sys Info</h1>
+    <div class="container">
+      <h1>Sys Info</h1>
 
-    <button id="getSysInfoBtn" type="button" class="btn">
-      Get Sys Info
-    </button>
+      <br />
 
-    <pre id="result"></pre>
+      <form>
+        <div class="mb-3">
+          <input type="email" class="form-control" id="inputEmail" placeholder="이메일">
+        </div>
+        <div class="mb-3">
+          <input type="text" class="form-control" id="inputName" placeholder="사용자 이름">
+        </div>
+        <button id="saveUserInfoBtn" type="submit" class="btn btn-outline-primary btn-sm">저장</button>
+      </form>
 
+      <br />
+  
+      <button id="getSysInfoBtn" button type="button" class="btn btn-secondary btn-sm">
+        정보 가져오기
+      </button>
+  
+      <pre id="result"></pre>  
+    </div>
+
+    <!-- Bootstrap Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="module" src="../node_modules/popper.js/dist/popper.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="./renderer.js"></script>
   </body>
 </html>
