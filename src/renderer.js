@@ -9,17 +9,10 @@ const resultTag = document.getElementById('result')
 
 document.getElementById('getSysInfoBtn').addEventListener('click', async () => {
   console.log('getSysInfoBtn clicked');
-  // const result = await window.api.getSysInfo();
-  // console.log('result', result);
-  // const jsonText =  JSON.stringify(result, undefined, 2);
-  // resultTag.textContent = window.api.iconv(jsonText, 'CP949', 'UTF-8');
-  const source = '(표준 디스크 드라이브)';
-  const cp949 = window.api.iconv(source, 'UTF-8', 'CP949');
-  const cp949String = String.fromCharCode.apply(null, cp949);
-  const ascii = window.api.iconv(cp949String, 'CP949', 'ASCII//IGNORE');
-  console.log('source', source);
-  console.log('cp949', cp949String);
-  console.log('ascii', ascii);
+  const result = await window.api.getSysInfo();
+  console.log('result', result);
+  const jsonText =  JSON.stringify(result, undefined, 2);
+  resultTag.textContent = jsonText;
 })
 
 // Run this function after the page has loaded
