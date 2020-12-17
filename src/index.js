@@ -16,7 +16,7 @@ const createWindow = () => {
       contextIsolation: true,
       enableRemoteModule: false,
       nodeIntegration: false,
-      sandbox: true,
+      // sandbox: true,
       preload: path.join(__dirname, 'preload.js'),
     }
   });
@@ -55,6 +55,13 @@ app.on('activate', () => {
 
 const {getSysInfo} = require('./info')
 
+let _sysInfo;
+
 ipcMain.handle('get-sysinfo', async (event) => {
-  return await getSysInfo()
+  if (!_sysInfo) {
+    _sysInfo = await getSysInfo()
+  }
+  return new Promise((resolve) => {
+    resolve(_sysInfo);
+  });
 })
