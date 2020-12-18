@@ -8,37 +8,86 @@
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">    
     <title>Sys Info</title>
     <link rel="stylesheet" href="../node_modules\bootstrap\dist\css\bootstrap.min.css">
+    <link rel="stylesheet" href="../node_modules/material-icons/iconfont/material-icons.css">
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
     <div class="container-fluid">
-      <div class="content-block">
+      <!-- <div class="vertical-spacer">
         <h3>Sys Info</h3>
-      </div>
+      </div> -->
 
-      <div class="content-block">
-        <form id="inputForm">
+      <div class="vertical-spacer">
+        <form id="input-form">
           <fieldset class="border p-4">
             <legend class="w-auto"><h6>사용자 정보</h6></legend>
             <div class="row align-items-center">
               <div class="col align-self-center">
-                <input type="email" class="form-control form-control-sm" id="inputEmail" placeholder="이메일" required>
-                <input type="text" class="form-control form-control-sm" id="inputName" placeholder="사용자 이름" required>
+                <input type="email" class="form-control form-control-sm" id="input-email" placeholder="이메일" required>
+                <input type="text" class="form-control form-control-sm" id="input-name" placeholder="사용자 이름" required>
               </div>
               <div class="col-2 align-self-center">
-                <button id="saveUserInfoBtn" type="submit" class="btn btn-outline-primary btn-sm">저장</button>
+                <button id="save-userinfo-btn" type="submit" class="btn btn-primary"><i class="material-icons">save</i></button>
               </div>
             </div>
           </fieldset>
         </form>
       </div>
       
-      <div class="content-block">
-        <button id="getSysInfoBtn" button type="button" class="btn btn-secondary btn-sm">
-          정보 가져오기
-        </button>
-    
-        <pre id="result"></pre>  
+      <div class="vertical-spacer">
+        <fieldset class="border p-4">
+          <legend class="w-auto"><h6>시스템 정보</h6></legend>
+          <div class="row justify-content-end vertical-spacer">
+            <button id="get-sysinfo-btn" class="btn btn-primary btn-sm">
+              <i class="material-icons small-icon">refresh</i>
+            </button>
+          </div>
+          <div class="row">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th scope="row">USERS</th>
+                  <td>
+                    <span id="users">USERS Info</span>
+                  </td>                  
+                </tr>
+                <tr>
+                  <th scope="row">OS</th>
+                  <td>
+                    <span id="os">OS Info</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">CPU</th>
+                  <td>
+                    <span id="cpu">CPU Info</span>
+                  </td>                  
+                </tr>
+                <tr>
+                  <th scope="row">BASEBOARD</th>
+                  <td>
+                    <span id="baseboard">BASEBOARD Info</span>
+                  </td>                  
+                </tr>
+                <tr>
+                  <th scope="row">BIOS</th>
+                  <td>
+                    <span id="bios">BIOS Info</span>
+                  </td>                  
+                </tr>
+                <tr>
+                  <th scope="row">MEMORY</th>
+                  <td>
+                    <span id="memory">MEMORY Info</span>
+                  </td>                  
+                </tr>
+              </tbody>
+            </table> 
+          </div>          
+          <div class="row">
+            <pre id="result"></pre>  
+          </div>
+        </fieldset>
       </div>
     </div>
 

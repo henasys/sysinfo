@@ -3,6 +3,7 @@
 
 const { contextBridge, ipcRenderer } = require('electron')
 const Iconv = require('iconv').Iconv
+const numeral = require('numeral')
 
 contextBridge.exposeInMainWorld(
   'mainApi',
@@ -23,6 +24,9 @@ contextBridge.exposeInMainWorld(
         console.warn(e);
         return source;
       }
+    },
+    numericFormat: (number, format) => {
+      return numeral(number).format(format);
     },
   }
 )

@@ -19,6 +19,10 @@ fieldset {
   margin:15px;
 } */
 
-.content-block {
+.vertical-spacer {
   margin-bottom: 1rem;
+}
+
+i.small-icon {
+  font-size: 1rem;
 }
