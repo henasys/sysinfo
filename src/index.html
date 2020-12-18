@@ -11,26 +11,35 @@
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    <div class="container">
-      <h3>Sys Info</h3>
+    <div class="container-fluid">
+      <div class="content-block">
+        <h3>Sys Info</h3>
+      </div>
 
-      <form id="inputForm">
-        <div class="mb-3">
-          <input type="email" class="form-control form-control-sm" id="inputEmail" placeholder="이메일" required>
-        </div>
-        <div class="mb-3">
-          <input type="text" class="form-control form-control-sm" id="inputName" placeholder="사용자 이름" required>
-        </div>
-        <button id="saveUserInfoBtn" type="submit" class="btn btn-outline-primary btn-sm">저장</button>
-      </form>
-
-      <br />
-  
-      <button id="getSysInfoBtn" button type="button" class="btn btn-secondary btn-sm">
-        정보 가져오기
-      </button>
-  
-      <pre id="result"></pre>  
+      <div class="content-block">
+        <form id="inputForm">
+          <fieldset class="border p-4">
+            <legend class="w-auto"><h6>사용자 정보</h6></legend>
+            <div class="row align-items-center">
+              <div class="col align-self-center">
+                <input type="email" class="form-control form-control-sm" id="inputEmail" placeholder="이메일" required>
+                <input type="text" class="form-control form-control-sm" id="inputName" placeholder="사용자 이름" required>
+              </div>
+              <div class="col-2 align-self-center">
+                <button id="saveUserInfoBtn" type="submit" class="btn btn-outline-primary btn-sm">저장</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      
+      <div class="content-block">
+        <button id="getSysInfoBtn" button type="button" class="btn btn-secondary btn-sm">
+          정보 가져오기
+        </button>
+    
+        <pre id="result"></pre>  
+      </div>
     </div>
 
     <!-- Bootstrap Optional JavaScript -->
