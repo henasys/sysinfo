@@ -38,6 +38,21 @@ const getSysInfo = async (callback = null) => {
   if (!result) {
     return;
   }
+  renderSysInfo(result);
+  callback && callback(result);
+};
+
+const receiveSysInfo = () => {
+  window.mainApi.receiveSysInfo((result) => {
+    console.log('receiveSysInfo', result);
+    if (!result) {
+      return;
+    }
+    renderSysInfo(result);
+  });
+}
+
+const renderSysInfo = (result) => {
   const users = result.users.map(u => u.user).join(', ');
   $("#users").text(users);
   const os = [result.os.distro, result.os.release].join(' ');
@@ -50,11 +65,11 @@ const getSysInfo = async (callback = null) => {
   $("#bios").text(bios);
   const memory = result.memLayout.map(e => e.size).reduce((acc, cur) => acc + cur, 0);
   $("#memory").text(window.mainApi.bytes(memory));
-  callback && callback(result);
 };
 
 $(async function () {
   console.log('document ready at renderer.js');
+  receiveSysInfo();
   await getUserInfo();
   await getSysInfo();
 });

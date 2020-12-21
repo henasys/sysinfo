@@ -66,6 +66,11 @@ ipcMain.handle('get-sysinfo', async (event) => {
   });
 })
 
+ipcMain.on('get-sysinfo-on', (event) => {
+  console.log('get-sysinfo-on');
+  event.sender.send('receive-sysinfo', _sysInfo);
+})
+
 const DataStore = require('./DataStore');
 const UserDto = require('./UserDto');
 

@@ -6,12 +6,26 @@ const Iconv = require('iconv').Iconv
 const numeral = require('numeral')
 const bytes = require('bytes')
 
+const TIMER_INTERVAL = 5 * 60 * 1000; // in unit of mili seconds
+// 5 mins => 5 * 60 * 1000
+// 4 hours => 4 * 60 * 60 * 1000
+
+const _timer = setInterval(() => {
+  console.log('calling from timer', new Date());
+  ipcRenderer.send('get-sysinfo-on');
+}, TIMER_INTERVAL);
+
 contextBridge.exposeInMainWorld(
   'mainApi',
   {
     getSysInfo: async () => {
       const result = await ipcRenderer.invoke('get-sysinfo')
       return result
+    },
+    receiveSysInfo: (callback) => {
+      ipcRenderer.on('receive-sysinfo', (event, ...args) => {
+        callback(...args);
+      })
     },
     saveUserInfo: (info) => {
       console.log('saveUserInfo', info);
