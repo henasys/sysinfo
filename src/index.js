@@ -1,10 +1,12 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, nativeImage, Tray, Menu, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
+
+let tray;
 
 const createWindow = () => {
   // Create the browser window.
@@ -20,6 +22,21 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     }
   });
+
+  const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png'
+  const iconPath = path.join(__dirname, iconName)
+  tray = new Tray(iconPath);
+  const menu = Menu.buildFromTemplate([
+      {label: "Open", click: (item, window, event) => {
+          //console.log(item, event);
+          mainWindow.show();
+      }},
+      {type: "separator"},
+      {role: "quit"}, // "role": system prepared action menu
+    ]);
+
+  tray.setToolTip("SysInfo");
+  tray.setContextMenu(menu);
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
@@ -68,7 +85,13 @@ ipcMain.handle('get-sysinfo', async (event) => {
 
 ipcMain.on('get-sysinfo-on', (event) => {
   console.log('get-sysinfo-on');
-  event.sender.send('receive-sysinfo', _sysInfo);
+  getSysInfo()
+    .then(data => {
+      _sysInfo = data;
+      event.sender.send('receive-sysinfo', _sysInfo);
+    })
+    .catch(e => {
+    });
 })
 
 const DataStore = require('./DataStore');
