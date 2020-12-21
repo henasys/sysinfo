@@ -75,7 +75,7 @@ ipcMain.on('save-userinfo', (event, info) => {
   store.setEmail(info.email);
 })
 
-ipcMain.handle('get-user-info', async (event) => {
+ipcMain.handle('get-userinfo', async (event) => {
   return new Promise((resolve) => {
     const result = {username: store.getUsername(), email: store.getEmail()};
     resolve(result);
