@@ -6,11 +6,11 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
   app.quit();
 }
 
-let tray;
+let top = {}; // prevent gc to keep windows
 
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  top.win = new BrowserWindow({
     width: 800,
     height: 800,
     webPreferences: {
@@ -25,24 +25,24 @@ const createWindow = () => {
 
   const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png'
   const iconPath = path.join(__dirname, iconName)
-  tray = new Tray(iconPath);
+  top.tray = new Tray(iconPath);
   const menu = Menu.buildFromTemplate([
       {label: "Open", click: (item, window, event) => {
           //console.log(item, event);
-          mainWindow.show();
+          top.win.show();
       }},
       {type: "separator"},
       {role: "quit"}, // "role": system prepared action menu
     ]);
 
-  tray.setToolTip("SysInfo");
-  tray.setContextMenu(menu);
+  top.tray.setToolTip("SysInfo");
+  top.tray.setContextMenu(menu);
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  top.win.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  top.win.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
