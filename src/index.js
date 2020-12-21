@@ -67,18 +67,18 @@ ipcMain.handle('get-sysinfo', async (event) => {
 })
 
 const DataStore = require('./DataStore');
+const UserDto = require('./UserDto');
+
 const store = new DataStore();
 
 ipcMain.on('save-userinfo', (event, info) => {
   console.log('save-userinfo', info);
-  // console.log('app.getPath(\'userData\')', app.getPath('userData'))
-  store.setUsername(info.username);
-  store.setEmail(info.email);
+  const user = new UserDto(info.username, info.email);
+  store.setUser(user);
 })
 
 ipcMain.handle('get-userinfo', async (event) => {
   return new Promise((resolve) => {
-    const result = {username: store.getUsername(), email: store.getEmail()};
-    resolve(result);
+    resolve(store.getUser());
   });
 })
