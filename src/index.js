@@ -8,6 +8,23 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 let top = {}; // prevent gc to keep windows
 
+const TIMER_INTERVAL = 1 * 60 * 1000; // in unit of mili seconds
+// 5 mins => 5 * 60 * 1000
+// 4 hours => 4 * 60 * 60 * 1000
+
+const _timer = setInterval(() => {
+  console.log('calling from timer', new Date());
+  if (top && top.win) {
+    getSysInfo()
+      .then(data => {
+        _sysInfo = data;
+        top.win.webContents.send('receive-sysinfo', _sysInfo);
+      })
+      .catch(e => {
+      });
+  }
+}, TIMER_INTERVAL);
+
 const createWindow = () => {
   // Create the browser window.
   top.win = new BrowserWindow({
