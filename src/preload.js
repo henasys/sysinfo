@@ -17,6 +17,9 @@ contextBridge.exposeInMainWorld(
       console.log('saveUserInfo', info);
       ipcRenderer.send('save-userinfo', info);
     },
+    getUserInfo: async () => {
+      return await ipcRenderer.invoke('get-user-info');
+    },
     iconv: (source, fromEncoding, toEncoding = 'UTF-8') => {
       const iconv = new Iconv(fromEncoding, toEncoding);
       try {

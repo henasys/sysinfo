@@ -66,6 +66,18 @@ ipcMain.handle('get-sysinfo', async (event) => {
   });
 })
 
+const DataStore = require('./DataStore');
+const store = new DataStore();
+
 ipcMain.on('save-userinfo', (event, info) => {
   console.log('save-userinfo', info);
+  store.setUsername(info.username);
+  store.setEmail(info.email);
+})
+
+ipcMain.handle('get-user-info', async (event) => {
+  return new Promise((resolve) => {
+    const result = {username: store.getUsername(), email: store.getEmail()};
+    resolve(result);
+  });
 })

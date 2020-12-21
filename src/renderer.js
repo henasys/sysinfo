@@ -7,48 +7,55 @@
 
 const getSysInfoBtn = document.getElementById('get-sysinfo-btn')
 const inputForm = document.getElementById('input-form')
-
+const emailTag = document.getElementById('input-email');
+const usernameTag = document.getElementById('input-username')
 const resultTag = document.getElementById('result')
 
 getSysInfoBtn.addEventListener('click', async () => {
   console.log('getSysInfoBtn clicked');
-  const result = await window.mainApi.getSysInfo();
-  console.log('result', result);
-  replaceFields(result);
-  const jsonText = JSON.stringify(result, undefined, 2);
-  resultTag.textContent = jsonText;
+  await getSysInfo((result) => {
+    const jsonText = JSON.stringify(result, undefined, 2);
+    resultTag.textContent = jsonText;
+  });
 })
 
 inputForm.addEventListener('submit', (event) => {
   event.preventDefault();
   // console.log('event', event);
-  const emailTag = document.getElementById('input-email');
-  const nameTag = document.getElementById('input-name')
-  window.mainApi.saveUserInfo({ name: nameTag.value, email: emailTag.value });
+  window.mainApi.saveUserInfo({ username: usernameTag.value, email: emailTag.value });
 })
 
-const replaceFields = (sysInfo) => {
-  console.log('sysInfo', sysInfo);
-  if (!sysInfo) {
-    return;
-  }
-  const users = sysInfo.users.map(u => u.user).join(', ');
-  $("#users").text(users);
-  const os = [sysInfo.os.distro, sysInfo.os.release].join(' ');
-  $("#os").text(os);
-  const cpu = [sysInfo.cpu.manufacturer, sysInfo.cpu.brand, sysInfo.cpu.speed].join(' ');
-  $("#cpu").text(cpu);
-  const baseboard = [sysInfo.baseboard.manufacturer, sysInfo.baseboard.model, sysInfo.baseboard.version].join(' ');
-  $("#baseboard").text(baseboard);
-  const bios = [sysInfo.bios.vendor, sysInfo.bios.version].join(' ');
-  $("#bios").text(bios);
-  const memory = sysInfo.memLayout.map(e => e.size).reduce((acc, cur) => acc + cur, 0);
-  $("#memory").text(window.mainApi.bytes(memory));
+const getUserInfo = async () => {
+  const result = await window.mainApi.getUserInfo();
+  console.log('getUserInfo', result);
+  $("#input-username").val(result.username);
+  $("#input-email").val(result.email);
 };
 
-$(document).ready(async function () {
-  console.log('document ready at renderer.js');
+const getSysInfo = async (callback = null) => {
   const result = await window.mainApi.getSysInfo();
-  replaceFields(result);
+  console.log('getSysInfo', result);
+  if (!result) {
+    return;
+  }
+  const users = result.users.map(u => u.user).join(', ');
+  $("#users").text(users);
+  const os = [result.os.distro, result.os.release].join(' ');
+  $("#os").text(os);
+  const cpu = [result.cpu.manufacturer, result.cpu.brand, result.cpu.speed].join(' ');
+  $("#cpu").text(cpu);
+  const baseboard = [result.baseboard.manufacturer, result.baseboard.model, result.baseboard.version].join(' ');
+  $("#baseboard").text(baseboard);
+  const bios = [result.bios.vendor, result.bios.version].join(' ');
+  $("#bios").text(bios);
+  const memory = result.memLayout.map(e => e.size).reduce((acc, cur) => acc + cur, 0);
+  $("#memory").text(window.mainApi.bytes(memory));
+  callback && callback(result);
+};
+
+$(async function () {
+  console.log('document ready at renderer.js');
+  await getUserInfo();
+  await getSysInfo();
 });
 // Run this function after the page has loaded
