@@ -4,6 +4,7 @@
 const { contextBridge, ipcRenderer } = require('electron')
 const Iconv = require('iconv').Iconv
 const numeral = require('numeral')
+const bytes = require('bytes')
 
 contextBridge.exposeInMainWorld(
   'mainApi',
@@ -27,6 +28,9 @@ contextBridge.exposeInMainWorld(
     },
     numericFormat: (number, format) => {
       return numeral(number).format(format);
+    },
+    bytes: (value, options = []) => {
+      return bytes(value, options);
     },
   }
 )

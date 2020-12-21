@@ -43,7 +43,7 @@ const replaceFields = (sysInfo) => {
   const bios = [sysInfo.bios.vendor, sysInfo.bios.version].join(' ');
   $("#bios").text(bios);
   const memory = sysInfo.memLayout.map(e => e.size).reduce((acc, cur) => acc + cur, 0);
-  $("#memory").text(window.mainApi.numericFormat(memory, '0.00b'));
+  $("#memory").text(window.mainApi.bytes(memory));
 };
 
 $(document).ready(async function () {
