@@ -71,6 +71,7 @@ const store = new DataStore();
 
 ipcMain.on('save-userinfo', (event, info) => {
   console.log('save-userinfo', info);
+  // console.log('app.getPath(\'userData\')', app.getPath('userData'))
   store.setUsername(info.username);
   store.setEmail(info.email);
 })
